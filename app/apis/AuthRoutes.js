@@ -9,6 +9,7 @@ var Jobform = require('../models/jobform');
 var Careercoachingsnapshot = require('../models/career-coaching-snapshot');
 var AssesmentF = require('../models/gtd-assessment');
 var WhatWouldYouDoAssessment = require('../models/what-would-you-do-assessment');
+var StyleUnderStressassessment = require('../models/style-under-stress-assessment');
 var influencerAssessment = require('../models/influencer-assessment');
 var ThePOHAssesment = require('../models/the-power-of-habit-assessment');
 var cors = require('cors');
@@ -348,6 +349,120 @@ module.exports = function (express) {
        apiRouter.get('/whatwouldyoudoassessment/:username', function (req, res) {
         // get all posts from database
         WhatWouldYouDoAssessment.find({
+          newnameurl: req.params.username
+        }, function (err, posts) {
+          if (err) {
+            res.status(500).json({
+              error: 'Could not retrieve posts'
+            });
+          }
+          else {
+            posts = posts.reverse();
+            res.json(posts);
+          }
+        });
+      });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // save styleunderstressassessment
+  apiRouter.route('/styleunderstressassessment/')
+  .post(function (req, res) {
+    console.log(req.body)
+    Post.findOne({ url: req.body.posturl }, function (err, post) {
+      if (err) { console.log(err) }
+      var styleunderstressassessment = new StyleUnderStressassessment({
+        q1: req.body.q1,
+        q2: req.body.q2,
+        q3: req.body.q3,
+        q4: req.body.q4,
+        q5: req.body.q5,
+        q6: req.body.q6,
+        q7: req.body.q7,
+        q8: req.body.q8,
+        q9: req.body.q9,
+        q10: req.body.q10,
+        q11: req.body.q11,
+        q12: req.body.q12,
+        q13: req.body.q13,
+        q14: req.body.q14,
+        q15: req.body.q15,
+        q16: req.body.q16,
+        q17: req.body.q17,
+        q18: req.body.q18,
+        q19: req.body.q19,
+        q20: req.body.q20,
+        q21: req.body.q21,
+        q22: req.body.q22,
+        q23: req.body.q23,
+        q24: req.body.q24,
+        q25: req.body.q25,
+        q26: req.body.q26,
+        q27: req.body.q27,
+        q28: req.body.q28,
+        q29: req.body.q29,
+        q30: req.body.q30,
+       
+        name:req.body.name,
+        email:req.body.email,
+        phone:req.body.phone,
+        organization:req.body.organization,
+        newnameurl:req.body.newnameurl
+
+      });
+      styleunderstressassessment.save(function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          return res.json({ message: 'Assesment Saved' });
+        }
+      });
+    });
+  })
+
+  // result
+  apiRouter.get('/styleunderstressassessment-result', function (req, res) {
+    StyleUnderStressassessment.find({}, function (err, categories) {
+      if (err) {
+        res.status(500).json({
+          error: 'Could not retrieve categories'
+        });
+      }
+      else {
+        categories = categories.reverse()
+        res.json(categories);
+      }
+    });
+  });
+
+       // styleunderstressassessment result by user
+       apiRouter.get('/styleunderstressassessment/:username', function (req, res) {
+        // get all posts from database
+        StyleUnderStressassessment.find({
           newnameurl: req.params.username
         }, function (err, posts) {
           if (err) {
